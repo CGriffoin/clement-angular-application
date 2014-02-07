@@ -1,0 +1,30 @@
+myModule.controller("myController",function myController($scope, FrameworkService) {
+
+    FrameworkService.fetch()
+        .success(function(resp){
+          $scope.frameworks = resp;
+            console.log("Réponse : "+resp);
+            $scope.model = {selectedFrameworkId : $scope.frameworks[0].id};
+	    //$scope.selected.framework = $scope.frameworks[0].name;
+	    //$scope.selected.framework = 'AngularJS';
+        })
+        .error(function(resp){
+           console.log(resp);
+        });
+
+
+
+});
+
+myModule.factory("FrameworkService", function ($http) {
+    var API_URI = '/server/fwk/fwk';
+
+    return {
+
+        fetch : function() {
+            return $http.get(API_URI);
+        }
+
+    };
+
+});

@@ -1,0 +1,52 @@
+"use strict";
+
+var FWK = [
+        {
+            "id":'1',
+            "name":'AngularJS',
+            "comment":'Des applications Web Monopage',
+            "url":'http://angularjs.org/',
+            "type":'Client'
+        },
+        {
+            "id":'2',
+            "name":'NodeJS',
+            "comment":'Des applications ultra rapides',
+            "url":'http://nodejs.org/',
+            "type":'Serveur'
+        },
+        {
+            "id":'3',
+            "name":'JSPdf',
+            "comment":'Des états PDF côté Client',
+            "url":'http://parall.ax/products/jspdf',
+            "type":'Client'
+        },
+        {
+            "id":'4',
+            "name":'JQuery',
+            "comment":'Write less do more',
+            "url":'http://jquery.com/',
+            "type":'Client'
+        }
+];
+
+/**
+ * Fetch all APIs
+ * If category query is provided, fetch APIs filtered by category
+ * @param req
+ * @param res
+ * @returns {*}
+ */
+exports.fetchFwks = function (req, res) {
+    var fwks = [];
+    if(req.query.category){
+        fwks = FWK.filter(function(fwk){
+            return fwk.category === req.query.category;
+        });
+    } else {
+        fwks = FWK;
+    }
+    return res.json(200, fwks);
+
+};

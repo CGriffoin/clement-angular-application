@@ -1,0 +1,180 @@
+<div class="container">
+    <section>
+        <header class="page-header">
+            <h1>Mes frameworks Javascript préférés : {{frameworks.length}}</h1>
+        </header>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Appliquer un filtre</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <label class="control-label">Identifiant</label>
+                            <input class="form-control" type="text" placeholder="ex : 3" ng-model="frameworkQuery.id"/>
+                        </div>
+                        <div>
+                            <label class="control-label">Nom</label>
+                            <input type="text" class="form-control" placeholder="ex : Angu"
+                                   ng-model="frameworkQuery.name"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Trier par</h3>
+                    </div>
+                    <div class="panel-body">
+                        <label class="control-label">Tri</label>
+                        <!--Faire un tri par rapport aux propriétés d'un objet-->
+                        <select class="form-control"
+                                ng-model="sortOption"
+                                ng-options="propertyName as propertyName for (propertyName,propertyValue) in frameworks[0]">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Inverser le tri</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="sortMode"/>
+                                Inverser
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Binding</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <label>
+                                Id de mon frameWork sélectionné : {{model.selectedFrameworkId}}
+                                <select class="form-control" ng-model="model.selectedFrameworkId"
+                                        ng-options="framework.id as framework.name group by framework.type for framework in frameworks | filter:frameworkQuery">
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped" style="font-weight: bolder;">
+                    <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Nom
+                        </th>
+                        <th>
+                            Commentaire
+                        </th>
+                        <th style="width:135px;">
+                            Actions
+                        </th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="framework in frameworks | filter:frameworkQuery | orderBy:sortOption:sortMode">
+                        <td>
+                            <div style="display: inline-block">
+                                <p ng-class="{'myClass1': $even,'myClass2': $odd}">{{framework.id}}</p>
+                            </div>
+                        </td>
+                        <td>
+                            <a ng-class="{'myClass1': $even,'myClass2': $odd}" target="_blank"
+                               ng-href="{{framework.url}}">{{framework.name}}</a>
+                        </td>
+                        <td>
+                            <p ng-class="{'myClass1': $even,'myClass2': $odd}">{{framework.comment}}</p>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-horizontal" ng-show="$index != (frameworks.length-1)">
+                                <a style="display: inline-block" class="btn btn-info"
+                                   href="#/home/edit/{{framework.id}}"><i
+                                        class="glyphicon glyphicon-edit glyphicon-white"></i></a>
+                                <a style="display: inline-block" ng-click="remove($index)" class="btn btn-danger"><i
+                                        class="glyphicon glyphicon-trash glyphicon-white"></i></a>
+                                <span style="display: inline-block" class="btn btn-default active" >
+                                    <i class="glyphicon glyphicon-plus-sign glyphicon-white"></i>
+                                </span>
+                            </div>
+                            <div class="btn-group btn-group-horizontal" ng-show="$index == (frameworks.length-1)">
+                                <a style="display: inline-block" class="btn btn-info"
+                                   href="#/home/edit/{{framework.id}}"><i
+                                        class="glyphicon glyphicon-edit glyphicon-white"></i></a>
+                                <a style="display: inline-block" ng-click="remove($index)" class="btn btn-danger"><i
+                                        class="glyphicon glyphicon-trash glyphicon-white"></i></a>
+                            <span style="display: inline-block" class="btn btn-primary" data-target="#addForm"
+                                  data-toggle="modal"><i
+                                    class="glyphicon glyphicon-plus-sign glyphicon-white"></i></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- formulaire de création - caché par défaut -->
+<div id="addForm" class="modal fade" role="dialog" aria-hidden="true" ng-controller="addFwkFormController">
+    <div class="modal-dialog"> check
+        <div class="modal-content">
+            <header class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <div style="text-align: center;">
+                    <h3>Formulaire de création</h3>
+                </div>
+            </header>
+            <section class="modal-body">
+                <form novalidate id="fwkForm" name="fwkForm" class="form-horizontal">
+                    <div class="control-group"
+                         ng-class="{'has-error-bis' : !fwkForm.$pristine && fwkForm.inputName.$error.required}">
+                        <label style="width: 100px;display: inline-block;" class="control-label">Nom :</label>
+                        <input type="text" style="display: inline-block;width: 66%;" class="form-control" name="inputName" ng-model="framework.name" required>
+                        <span class="help-block" style="text-align: center;" ng-show="!fwkForm.$pristine && fwkForm.inputName.$error.required">Le nom est obligatoire</span>
+                    </div>
+                    <div class="control-group" ng-class="{'has-error-bis' : fwkForm.textareaComment.$error.maxlength}">
+                        <label style="width: 100px;display: inline-block;" class="control-label">Commentaire :</label>
+                        <input type="text" style="display: inline-block;width: 66%;" class="form-control" ng-model="framework.comment" name="textareaComment"
+                               ng-maxlength="140">
+                        <span class="help-block" style="text-align: center;" ng-show="fwkForm.textareaComment.$error.maxlength">140 caractères maximum</span>
+                    </div>
+                    <div class="control-group"
+                         ng-class="{'has-error-bis' : !fwkForm.$pristine && (fwkForm.inputUrl.$error.url || fwkForm.inputUrl.$error.required)}">
+                        <label style="width: 100px;display: inline-block;" class="control-label">URL : </label>
+                        <input type="url" style="display: inline-block;width: 66%;" class="form-control" ng-model="framework.url" name="inputUrl"
+                               placeholder="http://www.mon-url.com" required>
+                        <span class="help-block" style="text-align: center;" ng-show="!fwkForm.$pristine && fwkForm.inputUrl.$error.url">L'URL saisie n'est pas correcte [http://www.exemple.com].</span>
+                        <span class="help-block" style="text-align: center;" ng-show="!fwkForm.$pristine && fwkForm.inputUrl.$error.required">Veuillez saisir une URL.</span>
+
+                    </div>
+                    <div class="control-group">
+                        <label style="width: 100px;display: inline-block;" class="control-label">Type :</label>
+                        <input type="text" style="display: inline-block;width: 66%;" class="form-control" ng-model="framework.type">
+                    </div>
+                </form>
+            </section>
+            <footer class="modal-footer" style="text-align: center;">
+                <button data-dismiss="modal" class="btn btn-danger btn-small" ng-click="initFwk()">Annuler</button>
+                <button data-dismiss="modal" class="btn btn-success" ng-click="addFwk(framework)"
+                        ng-disabled="fwkForm.$invalid">Ajouter
+                </button>
+            </footer>
+        </div>
+    </div>
+
+</div>

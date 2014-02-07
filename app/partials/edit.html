@@ -1,0 +1,107 @@
+<div class="container">
+
+    <header class="page-header">
+        <h1>Formulaire de modification</h1>
+    </header>
+    <section>
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>{{framework.name}}</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        <form novalidate id="editForm" name="editForm" class="form-horizontal">
+                            <div class="control-group"
+                                 ng-class="{'has-error-bis' : !editForm.$pristine && editForm.inputName.$error.required}">
+                                <label style="width: 100px;display: inline-block;" class="control-label">Nom :</label>
+                                <input type="text" style="display: inline-block;width: 66%;" class="form-control"
+                                       name="inputName"
+                                       ng-model="framework.name" required>
+                <span class="help-block" style="text-align: center;"
+                      ng-show="!editForm.$pristine && editForm.inputName.$error.required">Le nom est obligatoire</span>
+                            </div>
+                            <div class="control-group"
+                                 ng-class="{'has-error-bis' : editForm.textareaComment.$error.maxlength}">
+                                <label style="width: 100px;display: inline-block;" class="control-label">Commentaire
+                                    :</label>
+                                <input type="text" style="display: inline-block;width: 66%;" class="form-control"
+                                       ng-model="framework.comment" name="textareaComment"
+                                       ng-maxlength="140">
+                <span class="help-block" style="text-align: center;"
+                      ng-show="editForm.textareaComment.$error.maxlength">140 caractères maximum</span>
+                            </div>
+                            <div class="control-group"
+                                 ng-class="{'has-error-bis' : !editForm.$pristine && (editForm.inputUrl.$error.url || editForm.inputUrl.$error.required)}">
+                                <label style="width: 100px;display: inline-block;" class="control-label">URL : </label>
+                                <input type="url" style="display: inline-block;width: 66%;" class="form-control"
+                                       ng-model="framework.url" name="inputUrl"
+                                       placeholder="http://www.mon-url.com" required>
+                <span class="help-block" style="text-align: center;"
+                      ng-show="!editForm.$pristine && editForm.inputUrl.$error.url">L'URL saisie n'est pas correcte [http://www.exemple.com].</span>
+                <span class="help-block" style="text-align: center;"
+                      ng-show="!editForm.$pristine && editForm.inputUrl.$error.required">Veuillez saisir une URL.</span>
+
+                            </div>
+                            <div class="control-group">
+                                <label style="width: 100px;display: inline-block;" class="control-label">Type :</label>
+                                <input type="text" style="display: inline-block;width: 66%;" class="form-control"
+                                       ng-model="framework.type">
+                            </div>
+                            <footer style="text-align: center; margin-top: 10px;" class="form-actions">
+                                <a href="#/home" class="btn btn-danger btn-small">Annuler</a>
+                                <button class="btn btn-success" ng-click="edit(framework)">Modifier</button>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+
+        <!--<form novalidate id="editForm" name="editForm" class="form-horizontal">
+            <div class="control-group"
+                 ng-class="{'has-error-bis' : !editForm.$pristine && editForm.inputName.$error.required}">
+                <label style="width: 100px;display: inline-block;" class="control-label">Nom :</label>
+                <input type="text" style="display: inline-block;width: 66%;" class="form-control" name="inputName"
+                       ng-model="framework.name" required>
+                <span class="help-block" style="text-align: center;"
+                      ng-show="!editForm.$pristine && editForm.inputName.$error.required">Le nom est obligatoire</span>
+            </div>
+            <div class="control-group" ng-class="{'has-error-bis' : editForm.textareaComment.$error.maxlength}">
+                <label style="width: 100px;display: inline-block;" class="control-label">Commentaire :</label>
+                <input type="text" style="display: inline-block;width: 66%;" class="form-control"
+                       ng-model="framework.comment" name="textareaComment"
+                       ng-maxlength="140">
+                <span class="help-block" style="text-align: center;"
+                      ng-show="editForm.textareaComment.$error.maxlength">140 caractères maximum</span>
+            </div>
+            <div class="control-group"
+                 ng-class="{'has-error-bis' : !editForm.$pristine && (editForm.inputUrl.$error.url || editForm.inputUrl.$error.required)}">
+                <label style="width: 100px;display: inline-block;" class="control-label">URL : </label>
+                <input type="url" style="display: inline-block;width: 66%;" class="form-control"
+                       ng-model="framework.url" name="inputUrl"
+                       placeholder="http://www.mon-url.com" required>
+                <span class="help-block" style="text-align: center;"
+                      ng-show="!editForm.$pristine && editForm.inputUrl.$error.url">L'URL saisie n'est pas correcte [http://www.exemple.com].</span>
+                <span class="help-block" style="text-align: center;"
+                      ng-show="!editForm.$pristine && editForm.inputUrl.$error.required">Veuillez saisir une URL.</span>
+
+            </div>
+            <div class="control-group">
+                <label style="width: 100px;display: inline-block;" class="control-label">Type :</label>
+                <input type="text" style="display: inline-block;width: 66%;" class="form-control"
+                       ng-model="framework.type">
+            </div>
+            <footer style="text-align: center; margin-top: 10px;" class="form-actions">
+                <a href="#/home" class="btn btn-danger btn-small">Annuler</a>
+                <button class="btn btn-success" ng-click="edit(framework)">Modifier</button>
+            </footer>
+        </form>-->
+        <!--Essaie pour affichage d'URL-->
+        <!--<object type="text/html" data="{{framework.url}}"/>-->
+    </section>
+</div>
